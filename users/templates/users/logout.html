@@ -1,0 +1,61 @@
+{% extends 'food/base.html' %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header text-white bg-danger text-center">
+                    <h3 class="mb-0">Log Out</h3>
+                </div>
+                <div class="card-body text-center">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <p class="mb-4 fs-5">Are you sure you want to log out?</p>
+                        <div class="d-flex justify-content-center gap-3">
+                            <button type="submit" class="btn btn-success px-4 py-2">Confirm</button>
+                            <a href="{% url 'food:index' %}" class="btn btn-secondary px-4 py-2">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card-header {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .card-body p {
+        font-size: 1rem;
+        color: #555;
+        font-weight: 500;
+    }
+
+    .btn-success {
+        font-size: 1rem;
+        font-weight: bold;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .btn-success:hover {
+        background-color: #28a745;
+        transform: scale(1.05);
+    }
+
+    .btn-secondary {
+        font-size: 1rem;
+        font-weight: bold;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .btn-secondary:hover {
+        background-color: #6c757d;
+        transform: scale(1.05);
+    }
+</style>
+{% endblock %}

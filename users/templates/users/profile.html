@@ -1,0 +1,65 @@
+{% extends 'food/base.html' %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header text-white bg-info text-center">
+                    <h3 class="mb-0">Profile</h3>
+                </div>
+                <div class="card-body text-center">
+                    <img 
+                        src="{{ prof.image.url }}" 
+                        alt="Profile Image" 
+                        class="rounded-circle mb-4" 
+                        style="height: 120px; width: 120px; object-fit: cover; border: 3px solid #17a2b8;"
+                    >
+                    <h5 class="mb-1"><strong>ID:</strong> {{ prof.id }}</h5>
+                    <h5 class="mb-1"><strong>First Name:</strong> {{ user.first_name }}</h5>
+                    <h5 class="mb-1"><strong>Last Name:</strong> {{ user.last_name }}</h5>
+                    <h5 class="mb-3"><strong>Location:</strong> {{ user.profile.location }}</h5>
+
+                    <a href="{% url 'profform' prof.id %}" class="btn btn-dark px-4 py-2">
+                        Edit Profile
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card-header {
+        font-size: 1.5rem;
+        font-weight: bold;
+        background-color: #17a2b8; /* Bootstrap info color */
+        color: #fff;
+    }
+    
+    .card-body h5 {
+        font-size: 1.1rem;
+        color: #555;
+    }
+    
+    .card-body img {
+        transition: transform 0.2s;
+    }
+    
+    .card-body img:hover {
+        transform: scale(1.1);
+    }
+    
+    .btn-dark {
+        font-size: 1rem;
+        font-weight: bold;
+        transition: background-color 0.2s, color 0.2s;
+    }
+    
+    .btn-dark:hover {
+        background-color: #343a40;
+        color: #e9ecef;
+    }
+    
+</style>
+{% endblock %}

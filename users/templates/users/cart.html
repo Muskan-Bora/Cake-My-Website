@@ -1,0 +1,148 @@
+{% extends "food/base.html" %}
+
+<body>
+    {% block body %}
+    <div class="cart-container">
+        <h2 style="color: black;"><b>Your Cart</b></h2>
+
+        {% if cart_items %}
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Net Weight</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                        <tr>
+                            <td>{{ item.category }}</td>
+                            <td>{{ item.net_weight }} gm</td>
+                            <td>
+                                <form method="post" action="{% url 'users:update_cart_item' item.id %}" class="update-form">
+                                    {% csrf_token %}
+                                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="quantity-input">
+                                    <button type="submit" class="update-btn">Update</button>
+                                </form>
+                            </td>
+                            <td>${{ item.price }}</td>
+                            <td>${{ item.total_price }}</td>
+                            <td>
+                                <form method="post" action="{% url 'users:remove_cart_item' item.id %}" class="remove-form">
+                                    {% csrf_token %}
+                                    <button type="submit" class="remove-btn">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="cart-summary">
+                <p><strong>Total Price:</strong> ${{ total_price }}</p>
+                <a href="#" class="checkout-btn">Checkout</a>
+            </div>
+        {% else %}
+            <p>Your cart is empty.</p>
+        {% endif %}
+    </div>
+
+    <style>
+        body {
+            background-color: rgb(14, 14, 69);
+        }
+
+        .cart-container {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 800px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #aca8e8;
+            color: black;
+        }
+
+        .cart-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .cart-table th, .cart-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .cart-table th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+
+        .cart-table td {
+            background-color: #fff;
+        }
+
+        .cart-table .quantity-input {
+            width: 50px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .cart-table .update-btn, .cart-table .remove-btn {
+            padding: 5px 10px;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .cart-table .update-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .cart-table .remove-btn {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .cart-summary {
+            text-align: right;
+        }
+
+        .cart-summary p {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .cart-summary .checkout-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #071e37;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .cart-summary .checkout-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    {% endblock %}
+</body>
