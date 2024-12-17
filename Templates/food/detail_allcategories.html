@@ -1,0 +1,70 @@
+{% extends 'food/base.html' %}
+
+{% load static %}
+
+{% block body %}
+
+<br><div class="row bg-dark text-centre p-2 text-white border bottom shadow">
+    <h2 style="margin-left: 37%;"><b>"Order Your Fresh Baked Cakes"</b></h2>
+</div><br>
+
+<br><div class="row">
+    <div class="col col-md-3 offset-md-1">
+        <img src="{{ detailallcategories.ac_image.url }}" class="card" height="550px" width="800px"><br><br>
+    </div><br>
+
+    <div class="col-md-3 offset-md-4">
+
+        {% if user.is_superuser %}
+        <a href="{% url 'food:update_allcat' detailallcategories.id %}" style="width: 80px" class="btn btn-dark"><b>Edit</b></a>
+        <a href="{% url 'food:delete_allcat' detailallcategories.id %}" style="width: 80px" class="btn btn-danger"><b>Delete</b></a>
+        <a href="{% url 'food:allcategories' %}" style="width: 80px" class="btn btn-success"><b>Back</b></a><br><br>
+        <a href="{% url 'food:create_allcat' %}" style="width: 150px" class="btn btn-dark"><b>Add More Cakes</b></a>
+
+        {% elif user.is_authenticated %}
+            <a href="{% url 'food:allcategories' %}" style="width: 80px" class="btn btn-success"><b>Back</b></a>
+
+        {% endif %}
+        
+        <br><br><h3 style="font-size: 2rem"><b><u>{{ detailallcategories.ac_name }}</u></b></h3><br>
+        <h4 style="font-size: 1rem; text-align: justify">{{ detailallcategories.ac_desc }}</h4>
+        <h3>$ {{ detailallcategories.ac_price }}</h3><br>
+        <h5>Pick Your Choices for your moment..</h5>
+        <!-- <div class="row offset-md-1">
+            <h5 style="width: 100px; text-align: center; border-radius: 5px; padding: 2px; background-color: chartreuse;">250gms</h5>
+            <h5 style="width: 100px; text-align: center; border-radius: 5px; padding: 2px; background-color: coral;">500gms</h5>
+            <h5 style="width: 100px; text-align: center; border-radius: 5px; padding: 2px; background-color: rgb(241, 162, 177);">1kg</h5>
+        </div><br><br> -->
+        <!-- Add to Cart Form -->
+        <form id="add-to-cart-form" method="POST" action="{% url 'users:add_to_cart' %}">
+            {% csrf_token %}
+            
+            <!-- Hidden input to pass cake ID -->
+            <div style="border: solid; padding: 10px; font-size: 18px; border-radius: 10px; background-color:red; color: aliceblue;">
+                <input type="hidden" name="cake_id" value="{{ detailallcategories.id }}">
+                <input type="hidden" name="cake_category" value="allcategories"> <!-- Dynamic category -->
+                <!-- Select Net Weight -->
+                <label for="net-weight"><b>Net Weight: </b></label><br>
+                <select name="net_weight" id="net-weight">
+                    <option value="250" {% if selected_weight == 250 %}selected{% endif %}>250gm - ${{ detail_allcategories.price_250gm }}</option>
+                    <option value="500" {% if selected_weight == 500 %}selected{% endif %}>500gm - ${{ detail_allcategories.price_500gm }}</option>
+                    <option value="1000" {% if selected_weight == 1000 %}selected{% endif %}>1kg - ${{ detail_allcategories.price_1kg }}</option>
+                </select>
+
+                <p style="width: 200px;">
+                    <!-- Quantity Input -->
+                    <label for="quantity"><b>Quantity: </b></label>
+                    <input type="number" name="quantity" id="quantity" value="1" min="1">
+                </p>
+
+                {% if user.is_authenticated %}
+                    <button type="submit" class="btn btn-warning" style="width: 200px; margin-left: 100px;"><b>Add to Cart</b></button>
+                {% else %}
+                    <a href="{% url 'register' %}" class="btn btn-dark" style="width: 200px; margin-left: 100px;"><b>Sign Up to Add to Cart</b></a>
+                {% endif %}
+            </div>
+        </form><br>
+    </div>
+</div> 
+
+{% endblock body %}

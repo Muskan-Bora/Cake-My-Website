@@ -1,0 +1,264 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static '/food/style.css' %}">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
+</head>
+<body>
+
+    <nav class="navbar navbar-dark bg-dark">
+        <a href="{% url 'food:index' %}" class="navbar-brand mx-5">
+            <img src="{% static 'food/Images/logo/Cakes2Connect-Logo.png' %}" width="90" height="80">    
+            <b class="mx-3"> Cakes 2 Connect.. </b>
+        </a>
+
+        <a href="{% url 'food:allcategories' %}" class="navbar-brand btn-dark mx-5">
+            <b class="mx-3"> All Categories of Cakes </b>
+        </a>
+
+        <div class="navbar">
+
+            {% if user.is_superuser %}
+
+                <a href="{% url 'food:create_item' %}" class="nav-item nav-link btn btn-dark">
+                    <b>Add Item</b>
+                </a>
+
+                <a href="{% url 'users:view_cart' %}" class="btn btn-primary">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    <b>Cart ({{ cart_count }})</b>
+                </a>
+
+                <a href="{% url 'profile' %}" class="nav-item nav-link btn btn-dark">
+                    <b>Profile</b>
+                </a>
+
+                <a href="{% url 'logout' %}" class="nav-item nav-link btn btn-dark">
+                    <b>Logout</b>
+                </a>
+
+            {% elif user.is_authenticated %}
+
+                <a href="{% url 'users:view_cart' %}" class="btn btn-primary">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    <b>Cart ({{ cart_count }})</b>
+                </a>
+
+                <a href="{% url 'profile' %}" class="nav-item nav-link btn btn-dark">
+                    <b>Profile</b>
+                </a>
+
+                <a href="{% url 'logout' %}" class="nav-item nav-link btn btn-dark">
+                    <b>Logout</b>
+                </a>
+
+            {% else %}
+
+                <a href="{% url 'register' %}" class="nav-item nav-link btn btn-dark">
+                    <b>Sign Up</b>
+                </a>
+
+                <a href="{% url 'login' %}" class="nav-item nav-link btn btn-dark">
+                    <b>Login</b>
+                </a>
+
+            {% endif %}
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    
+                <li class="nav-item dropdown mx-4">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <b>Category</b>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'food:category' 'EC' %}"><b>Eggless Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:category' 'GC' %}"><b>Gourmet Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:category' 'PC' %}"><b>Photo Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:category' 'HC' %}"><b>Heart-Shaped Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:category' 'Wed' %}"><b>Wedding Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:category' 'GH' %}"><b>Gift Hampers</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:category' 'TC' %}"><b>Tea Cakes & Cookies</b></a></li>
+                    </ul>
+                </li>
+                    
+                <li class="nav-item dropdown mx-4">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <b>Flavours</b>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'food:flavour' 'CC' %}"><b>Chocolate Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:flavour' 'FC' %}"><b>Fruits Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:flavour' 'RC' %}"><b>Red Velvet Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:flavour' 'SC' %}"><b>Strawberry Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:flavour' 'BC' %}"><b>Blackforest Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:flavour' 'PC' %}"><b>Pineapple Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:flavour' 'BSC' %}"><b>Butterscotch Cakes</b></a></li>
+                    </ul>
+                </li>
+                    
+                <li class="nav-item dropdown mx-4">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <b>Kids Cakes</b>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'food:kid' 'PC' %}"><b>Princess Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:kid' 'CC' %}"><b>Car Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:kid' 'CTC' %}"><b>Cartoon Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:kid' 'SHC' %}"><b>Super Hero Cakes</b></a></li>
+                    </ul>
+                </li>
+                    
+                <li class="nav-item dropdown mx-4">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <b>Trending Cakes</b>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'food:trend' 'PC' %}"><b>Pinata Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:trend' 'BC' %}"><b>Bomb Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:trend' 'PMC' %}"><b>Pull Me Up Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:trend' 'SCB' %}"><b>Surprise Cake Box</b></a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown mx-4">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <b>Occasional</b>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'food:occasion' 'MFC' %}"><b>Mother's & Father's Day Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:occasion' 'DC' %}"><b>Doctor's Day Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:occasion' 'TC' %}"><b>Teacher's Day Cakes</b></a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown mx-4">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <b>Designer Cakes</b>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'food:design' 'ANC' %}"><b>Alphabet & Number Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:design' 'BSC' %}"><b>Baby Shower Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:design' 'CTC' %}"><b>Cricket Theme Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:design' 'JTC' %}"><b>Jungle Theme Cakes</b></a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown mx-4">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <b>Birthday</b>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'food:birthday' 'BPC' %}"><b>Birthday Photo Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:birthday' 'BC' %}"><b>1st Birthday Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:birthday' 'SBC' %}"><b>Special Birthday Cakes</b></a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown mx-4">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <b>Anniversary</b>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'food:anniversary' 'APC' %}"><b>Anniversary Photo Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:anniversary' '1AC' %}"><b>1st Anniversary Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:anniversary' '25A' %}"><b>25th Anniversary Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:anniversary' '50A' %}"><b>50th Anniversary Cakes</b></a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown mx-4">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <b>Desserts</b>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'food:desserts' 'PS' %}"><b>Pastries</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:desserts' 'JC' %}"><b>Jar Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:desserts' 'CC' %}"><b>Cup Cakes</b></a></li>
+                        <li><a class="dropdown-item" href="{% url 'food:desserts' 'BN' %}"><b>Brownies</b></a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
+    {% if messages %}
+
+        {% for message in messages %}
+
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+    <!-- <div class="mb-5"> -->
+
+    </div>
+
+    {% block body %}
+    {% endblock body %}
+
+    <!--  footer -->
+    <footer id="footer" style="background-color: rgb(38, 20, 102); color: white;">
+        <div class="container p-5">
+            <div class="row g-5">
+                <div class="col-lg-4 col-md-1 d-flex flex-column justify-content-start">
+                    <a href="{% url 'food:index' %}" class="navbar-brand offset-md-1"> 
+                        <img src="{% static 'food/Images/logo/Cakes2Connect-Logo.png' %}" width="90" height="80" class="navbar-logo">   
+                    </a>
+                    <strong class="navbar-text" style="color: rgb(227, 240, 238);"> "Cakes 2 Connect.." </strong>
+                </div>
+                <div class="col-lg-3 d-flex flex-column">
+                    <h3 class="mb-4"><b>Quick Links</b></h3>
+                    <div style="color: aliceblue;">
+                        <a class="mb-2" href="{% url 'food:index' %}"><h5 style="color: rgb(232, 212, 212)"><b>Home</b></h5></a>
+                        <a class="mb-2" href="{% url 'food:allcategories' %}"><h5 style="color: rgb(231, 220, 220)"><b>All Categories of Cakes</b></h5></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 offset-md-1">
+                    <h3 class="mb-4"><b>Get In Touch</b></h3>
+                    <div class="row"><h2 style="font-size:1.2rem"><i class="fa-solid fa fa-envelope"></i>&nbsp <b>example123@gmail.com</b></h2></div>
+                    <div class="row"><h2 style="font-size:1.2rem"><i class="fa-solid fa fa-phone"></i>&nbsp <b>+91 1234567890</b></h2></div>
+                    <br><h3 class="mb-2"><b>Connect With Us</b></h3>
+                    <div class="d-flex">
+                        <h1><a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="#"><i class="fab fa-facebook-f fw-normal"></i></a></h1>
+                        <h1><a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a></h1>
+                        <h1><a class="btn btn-lg btn-primary btn-lg-square rounded-circle" href="#"><i class="fab fa-instagram fw-normal"></i></a></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid text-white text-center border-top py-4 px-5" style="background-color: black;">
+            <p class="m-0">&copy; <a class="text-white border-bottom" href="{% url 'food:index' %}">"Cakes 2 Connect.."</a> All Rights Reserved. </p>
+        </div>
+    </footer>
+    <!-- end footer -->
+
+</body>
+</html>

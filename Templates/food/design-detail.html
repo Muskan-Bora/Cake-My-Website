@@ -1,0 +1,52 @@
+{% extends 'food/base.html' %}
+
+{% load static %}
+
+{% block body %}
+
+<br><div class="col col-md-3 offset-md-9">
+    <a href="{% url 'food:index' %}" style="width: 80px" class="btn btn-success">Back</a>
+</div>
+
+<br><br><br><div class="row">
+    <div class="col col-md-4 offset-md-1">
+        <img src="{{ detail_design.designing_image.url }}" class="card" height="450px" width="550px">
+    </div>
+
+    <div class=" col col-md-4 offset-md-1 card-header">
+        <h2 style="font-style: initial; font-size: 3rem">{{ detail_design.designing_name }}</h2><br><br>
+        <h4 style="font-style: italic; font-size: 1rem; text-align: justify">{{ detail_design.designing_desc }}</h4>
+        <h3 style="font-style: normal; font-size: 2rem; text-align: justify"><b>$ {{ detail_design.designing_price }}</b></h3>
+        <!-- Add to Cart Form -->
+        <form id="add-to-cart-form" method="POST" action="{% url 'users:add_to_cart' %}">
+            {% csrf_token %}
+            
+            <!-- Hidden input to pass cake ID -->
+            <div style="border: solid; padding: 10px; font-size: 18px; border-radius: 10px; background-color:red; color: aliceblue;">
+                <input type="hidden" name="cake_id" value="{{ detail_design.id }}">
+                <input type="hidden" name="cake_category" value="design"> <!-- Dynamic category -->
+                <!-- Select Net Weight -->
+                <label for="net-weight"><b>Net Weight: </b></label><br>
+                <select name="net_weight" id="net-weight">
+                    <option value="250" {% if selected_weight == 250 %}selected{% endif %}>250gm - ${{ detail_design.price_250gm }}</option>
+                    <option value="500" {% if selected_weight == 500 %}selected{% endif %}>500gm - ${{ detail_design.price_500gm }}</option>
+                    <option value="1000" {% if selected_weight == 1000 %}selected{% endif %}>1kg - ${{ detail_design.price_1kg }}</option>
+                </select>
+
+                <p style="width: 200px;">
+                    <!-- Quantity Input -->
+                    <label for="quantity"><b>Quantity: </b></label>
+                    <input type="number" name="quantity" id="quantity" value="1" min="1">
+                </p>
+
+                {% if user.is_authenticated %}
+                    <button type="submit" class="btn btn-warning" style="width: 200px; margin-left: 100px;"><b>Add to Cart</b></button>
+                {% else %}
+                    <a href="{% url 'register' %}" class="btn btn-dark" style="width: 200px; margin-left: 100px;"><b>Sign Up to Add to Cart</b></a>
+                {% endif %}
+            </div>
+        </form><br>
+    </div>
+</div><br><br>
+
+{% endblock body %}

@@ -1,0 +1,66 @@
+{% extends 'food/base.html' %}
+
+{% block body %}
+
+<br><br><br><div class="row">
+
+    <div class="col-md-2 offset-md-1 card-header">
+        <img height="400px" width="450px" class="card" src="{{ item.item_image }}">
+    </div>
+
+    <div class="col-md-4 offset-md-2">
+        <h1 style="font-style: italic">{{ item.item_name }}</h1>
+        <h2 style="font-style: italic; font-size: 1.3rem; text-align: justify">{{ item.item_desc }}</h2>
+        <h3>$ {{ item.item_price }}</h3>
+        <!-- Add to Cart Form -->
+        <form id="add-to-cart-form" method="POST" action="{% url 'users:add_to_cart' %}">
+            {% csrf_token %}
+            
+            <!-- Hidden input to pass cake ID -->
+            <div style="border: solid; padding: 10px; font-size: 18px; border-radius: 10px; background-color:red; color: aliceblue;">
+                <input type="hidden" name="cake_id" value="{{ item.id }}">
+                <input type="hidden" name="cake_category" value="item_item"> <!--Dynamic category -->
+                <!-- Select Net Weight -->
+                <label for="net-weight"><b>Net Weight: </b></label><br>
+                <select name="net_weight" id="net-weight">
+                    <option value="250" {% if selected_weight == 250 %}selected{% endif %}>250gm - ${{ item.price_250gm }}</option>
+                    <option value="500" {% if selected_weight == 500 %}selected{% endif %}>500gm - ${{ item.price_500gm }}</option>
+                    <option value="1000" {% if selected_weight == 1000 %}selected{% endif %}>1kg - ${{ item.price_1kg }}</option>
+                </select>
+
+                <p style="width: 200px;">
+                    <!-- Quantity Input -->
+                    <label for="quantity"><b>Quantity: </b></label>
+                    <input type="number" name="quantity" id="quantity" value="1" min="1">
+                </p>
+
+                <!-- Add to Cart Button -->
+                {% if user.is_authenticated %}
+                    <button type="submit" class="btn btn-warning" style="width: 200px; margin-left: 100px;"><b>Add to Cart</b></button>
+                {% else %}
+                    <a href="{% url 'register' %}" class="btn btn-dark" style="width: 200px; margin-left: 100px;"><b>Sign Up to Add to Cart</b></a>
+                {% endif %}
+            </div>
+        </form><br>
+    </div>
+
+    <div class="col-md-3">
+        {% if user.is_authenticated %}
+            {% if user.is_superuser %}
+                <!-- Superuser sees all buttons -->
+                <a href="{% url 'food:update_item' item.id %}" style="width:80px" class="btn btn-warning"><b>Edit</b></a>
+                <a href="{% url 'food:delete_item' item.id %}" style="width:80px" class="btn btn-danger"><b>Delete</b></a>
+            {% endif %}
+            <!-- Authenticated users and superusers see the Back button -->
+            <a href="{% url 'food:index' %}" style="width:80px" class="btn btn-success"><b>Back</b></a>
+        {% else %}
+            <!-- Only show Back button for unauthenticated users -->
+            <a href="{% url 'food:index' %}" style="width:80px" class="btn btn-success"><b>Back</b></a>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}
+
+<!-- Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolore natus dolorum nulla! Ut placeat fuga iure dolor voluptates velit asperiores nemo voluptatem pariatur? Iusto architecto et nesciunt earum adipisci illum! -->

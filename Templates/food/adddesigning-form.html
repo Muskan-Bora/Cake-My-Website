@@ -1,0 +1,40 @@
+{% extends 'food/base.html' %}
+
+{% load static %}
+
+{% block body %}
+
+<br><br><div class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="card">
+                <div class="card-header text-white bg-info">
+                    <div class="card-title">
+                        Add Designing Cakes
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                    
+                        <label>Designer Cake Code: </label><br>
+                        {{ form.design_code }}
+
+                        <br><label>Designer Cake Name: </label><br>
+                        {{ form.design_name }}
+
+                        <br><label>Designer Cake Image: </label><br>
+                        {{ form.design_image }}
+
+                        <br><label>Designer Cake Type: </label><br>
+                        {{ form.design_type }}
+                    
+                        <br><br><button type="submit" class="btn btn-success btn-sm">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

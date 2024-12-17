@@ -1,0 +1,30 @@
+{% extends 'food/base.html' %}
+
+{% load static %}
+
+{% block body %}
+
+<br><div class="col col-md-3 offset-md-9">
+    <a href="{% url 'food:index' %}" style="width: 80px" class="btn btn-success">Back</a>
+</div>
+
+<br><br><br><div class="row">
+    <div class="col col-md-4 offset-md-1">
+        <img src="{{ detail_dessert.dc_image.url }}" class="card" height="450px" width="550px">
+    </div>
+
+    <div class=" col col-md-4 offset-md-1 card-header">
+        <h2 style="font-style: initial; font-size: 3rem">{{ detail_dessert.dc_name }}</h2><br><br>
+        <h4 style="font-style: italic; font-size: 1rem; text-align: justify">{{ detail_dessert.dc_desc }}</h4>
+        <h3 style="font-style: normal; font-size: 2rem; text-align: justify"><b>$ {{ detail_dessert.dc_price }}</b></h3>
+
+        <!-- Add to Cart Button -->
+        {% if user.is_authenticated %}
+        <button type="submit" class="btn btn-warning" style="width: 200px; margin-left: 100px;"><b>Add to Cart</b></button>
+        {% else %}
+            <a href="{% url 'register' %}" class="btn btn-dark" style="width: 200px; margin-left: 100px;"><b>Sign Up to Add to Cart</b></a>
+        {% endif %}
+    </div>
+</div><br><br>
+
+{% endblock body %}

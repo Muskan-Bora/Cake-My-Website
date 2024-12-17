@@ -1,0 +1,47 @@
+{% extends 'food/base.html' %}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block body %}
+
+    <br><div class="row bg-dark text-centre p-2 text-white border bottom shadow">
+        <h2 style="margin-left: 40%;"><b>"Baked All Cakes With Joy"</b></h2>
+    </div><br>
+
+    <div class="col-sm-10">
+        <div class="row">
+            {% for val in desserts %}
+                <div class="col text-align">
+                    <div class="offset-md-3">
+                        <div style="display: block; margin:auto">
+                            <img src="{{ val.dc_image.url }}" class='card-header' height="450px" width="550px">
+                        </div>
+                    </div><br>
+
+                    <div>
+                        <h2 style="font-style: initial; font-size: 2rem; margin-left:24lvh"><b>{{ val.dc_name }}</b></h2>
+                        <h2 style="font-style: initial; font-size: 2rem; margin-left:24lvh"><b>${{ val.dc_price }}</b></h2>
+                    </div>
+
+                    <div style="margin-left:25lvh"> 
+                        <a href="{% url 'food:detail_dessert' val.dc_code %}" style="width: 250px; text-align: center;" class="btn btn-danger">
+                            <h4> KNOW MORE </h4>
+                        </a>
+                    </div><br><br><br>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    {% endblock body %}
+
+</body>
+</html>

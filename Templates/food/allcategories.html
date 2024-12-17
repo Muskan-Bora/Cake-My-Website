@@ -1,0 +1,59 @@
+{% extends 'food/base.html' %}
+
+{% load static %}
+
+{% block body %}
+
+<br><div class="row bg-dark text-centre p-2 text-white border bottom shadow">
+    <h2 style="margin-left: 37%;"><b>"Order Your Fresh Baked Cakes"</b></h2>
+</div><br>
+
+<div class="offset-md-1">
+    <h3><b><u>Special Cakes Baked For You</u></b></h3><br>
+    <a href="{% url 'food:trend' 'PC' %}" style="width: 170px" class="btn btn-warning"><b>Pinata Cakes</b></a>
+    <a href="{% url 'food:trend' 'BC' %}" style="width: 170px" class="btn btn-dark"><b>Bomb Cakes</b></a>
+    <a href="{% url 'food:trend' 'PMC' %}" style="width: 170px" class="btn btn-warning"><b>Pull Me Up Cakes</b></a>
+    <a href="{% url 'food:trend' 'SCB' %}" style="width: 170px" class="btn btn-dark"><b>Surprise Cake Box</b></a>
+    <a href="{% url 'food:flavour' 'CC' %}" style="width: 170px" class="btn btn-warning"><b>Chocolate Cakes</b></a>
+    <a href="{% url 'food:flavour' 'FC' %}" style="width: 170px" class="btn btn-dark"><b>Fruit Cakes</b></a>
+    <a href="{% url 'food:flavour' 'BSC' %}" style="width: 170px" class="btn btn-warning"><b>Butterscotch Cake</b></a><br><br>
+    <a href="{% url 'food:design' 'BSC' %}" style="width: 170px" class="btn btn-dark"><b>Babyshower Cakes</b></a>
+    <a href="{% url 'food:birthday' 'BC' %}" style="width: 170px" class="btn btn-warning"><b>1st Birthday Cakes</b></a>
+    <a href="{% url 'food:kid' 'PC' %}" style="width: 170px" class="btn btn-dark"><b>Princess Cakes</b></a>
+    <a href="{% url 'food:kid' 'SHC' %}" style="width: 170px" class="btn btn-warning"><b>Superhero Cakes</b></a>
+    <a href="{% url 'food:category' 'Wed' %}" style="width: 170px" class="btn btn-dark"><b>Wedding Cakes</b></a>
+    <a href="{% url 'food:desserts' 'PS' %}" style="width: 170px" class="btn btn-warning"><b>Pastries</b></a>
+    <a href="{% url 'food:desserts' 'JC' %}" style="width: 170px" class="btn btn-dark"><b>Jar Cakes</b></a>
+</div><br>
+
+<div class="row bg-dark text-centre p-1 text-white border bottom shadow"></div><br>
+
+<div class="col-sm-12">
+    <div class="row">
+        {% for AllCategories in allcategories %}
+
+            <div class="col text-centre mb-6">
+                <div class="offset-md-1 col-md-1">
+                    <div style="display: block; margin:auto">
+                        <img src="{{ AllCategories.ac_image.url }}" class="card-header" height="350px" width="400px">
+                    </div>
+                </div><br>
+            
+                <div class="card-header">   
+                    <h2 style="font-style: italic; font-size: 1.5rem; margin-left:18lvh"><b>{{ AllCategories.ac_name }}</b></h2>
+                    <!-- <h5 style="font-style:italic; font-size:1rem">{{ item.item_desc | truncatewords:6 }}</h5> -->
+                    <h4 style="font-style: italic; font-size: 1.5rem; margin-left:18lvh">$ {{ AllCategories.ac_price }}</h4>
+                </div><br>
+
+                <div class="card-header" style="margin-left:18lvh; margin-right:28lvh">
+                    <a href="{% url 'food:detail_allcategories' AllCategories.id %}"style="width: 100px; text-align: center;" class="btn btn-danger">
+                        <b>Details</b>
+                    </a>
+                </div><br><br><br>
+            </div>
+
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock body %}

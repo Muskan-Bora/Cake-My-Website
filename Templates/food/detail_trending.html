@@ -1,0 +1,40 @@
+{% extends 'food/base.html' %}
+
+{% load static %}
+
+{% block body %}
+
+    <br><div class="row">
+        <div class="col col-md-3 offset-md-1">
+            <img src="{{ detailtrending.trend_image.url }}" class="card" height="550px" width="800px"><br><br>
+        </div><br>
+
+        <div class="col-md-3 offset-md-4">
+            {% if user.is_superuser %}
+
+                <br><a href="{% url 'food:delete_trending' detailtrending.id %}" style="width: 80px" class="btn btn-danger"><b>Delete</b></a>
+                <a href="{% url 'food:index' %}" style="width: 80px" class="btn btn-success"><b>Back</b></a><br>
+                <br><a href="{% url 'food:create_trending' %}" style="width: 180px" class="btn btn-dark"><b>Add Trending Cakes</b></a><br>
+            
+            {% elif user.is_authenticated %}
+                <a href="{% url 'food:index' %}" style="width: 100px" class="btn btn-success"><b>Back</b></a><br>
+            
+            {% endif %}
+
+            <br><br><h3 style="font-size: 2rem"><b><u>{{ detailtrending.trend_name }}</u></b></h3><br>
+            <h4 style="font-size: 2rem">
+                Many Unique Flavours:
+                <h5>{{ detailtrending.trend_type }}</h5>
+            </h4><br>
+
+            <div>
+                <h3><b><u>All Varieties of Trend Cakes</u></b></h3><br>
+                <a href="{% url 'food:trend' 'PC' %}" style="width: 170px" class="btn btn-danger"><b>Pinata Cakes</b></a>
+                <a href="{% url 'food:trend' 'BC' %}" style="width: 170px" class="btn btn-warning"><b>Bomb Cakes</b></a><br><br>
+                <a href="{% url 'food:trend' 'PMC' %}" style="width: 170px" class="btn btn-primary"><b>Pull Me Up Cakes</b></a>
+                <a href="{% url 'food:trend' 'SCB' %}" style="width: 170px" class="btn btn-dark"><b>Surprise Cake Box</b></a>
+            </div>
+        </div>
+    </div> 
+
+{% endblock body %}

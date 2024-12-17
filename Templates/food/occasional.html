@@ -1,0 +1,47 @@
+{% extends 'food/base.html' %}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block body %}
+    
+    <br><div class="row bg-dark text-centre p-2 text-white border bottom shadow">
+        <h2 style="margin-left: 40%;"><b>"Baked All Cakes With Joy"</b></h2>
+    </div><br>
+
+    <div class="col-sm-12">
+        <div class="row">
+            {% for val in occasion %}
+
+                <div class="col text-centre mb-6">
+                    <div class="offset-md-1 col-md-1">
+                        <br><br><br><div style="display:block; margin: auto;">
+                            <img src="{{ val.occasion_image.url }} " class='card-header' height="350px" width="400px">
+                        </div>
+                    </div>
+                        <div class="card-header">
+                            <h2 style="font-style: initial; font-size: 1.5rem; margin-left:13lvh"><b>{{ val.occasion_name }}</b></h2>
+                            <h4 style="font-style: initial; font-size: 1.5rem; margin-left:13lvh">$ {{ val.occasion_price }}</h4>
+                        </div>
+
+                        <div class="card-header" style="margin-left:18lvh; margin-right:28lvh">
+                            <a href="{% url 'food:detail_occasion' val.occasion_code %}" style="width: 100px; text-align: center;" class="btn btn-success">
+                                <b>Details</b>
+                            </a>
+                        </div><br><br><br>
+                    </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% endblock body %}
+
+</body>
+</html>

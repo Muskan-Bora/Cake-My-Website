@@ -1,0 +1,43 @@
+{% extends 'food/base.html' %}
+
+{% load static %}
+
+{% block body %}
+
+<br><br><div class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="card">
+                <div class="card-header text-white bg-info">
+                    <div class="card-title">
+                        Add Trending Cakes
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                    
+                        <label>Cake Code: </label><br>
+                        {{ form.ac_code }}
+
+                        <br><label>Cake Name: </label><br>
+                        {{ form.ac_name }}
+
+                        <br><label>Cake Description: </label><br>
+                        {{ form.ac_desc }}
+
+                        <br><label>Cake Price: </label><br>
+                        {{ form.ac_price }}
+
+                        <br><label>Cake Image: </label><br>
+                        {{ form.ac_image }}
+                    
+                        <br><br><button type="submit" class="btn btn-success btn-sm">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

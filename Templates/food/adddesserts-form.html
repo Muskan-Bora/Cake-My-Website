@@ -1,0 +1,40 @@
+{% extends 'food/base.html' %}
+
+{% load static %}
+
+{% block body %}
+
+<br><br><div class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="card">
+                <div class="card-header text-white bg-info">
+                    <div class="card-title">
+                        Add More Desserts
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                    
+                        <label>Desserts Code: </label><br>
+                        {{ form.dessert_code }}
+
+                        <br><label>Dessert Name: </label><br>
+                        {{ form.dessert_name }}
+
+                        <br><label>Dessert Image: </label><br>
+                        {{ form.dessert_image }}
+
+                        <br><label>Dessert Type: </label><br>
+                        {{ form.dessert_type }}
+                    
+                        <br><br><button type="submit" class="btn btn-success btn-sm">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
