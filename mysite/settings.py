@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['cake-website.onrender.com']
 # Application definition
 
 INSTALLED_APPS = [
+    'food',
     'users',
     'django.contrib.admin',
     'django.contrib.auth',
