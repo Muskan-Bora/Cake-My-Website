@@ -21,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3$)@55jl$^j4(1rdpf7p#b=n@4k03@x5dhu5$(%g^#gj#)(+xw'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-3$)@55jl$^j4(1rdpf7p#b=n@4k03@x5dhu5$(%g^#gj#)(+xw')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['cake-website.onrender.com']
 
 
 # Application definition
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Add this line
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -120,10 +121,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
-# LOGIN_URL = 'login'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'pictures')
-MEDIA_URL = 'pic/'
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = '/static/'  # Keep this the same
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # This should be where the static files will be collected
+
+# Use Whitenoise to serve static files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Media files (uploads, etc.)
+MEDIA_ROOT = os.path.join(BASE_DIR, 'pictures')  # Keep your existing media directory
+MEDIA_URL = '/pic/'  # URL to access media files
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
